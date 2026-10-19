@@ -1,0 +1,69 @@
+Restaurants with reviews: 100 | reviews: 9961 | mean rating 3.60
+5-star share 38.5% | 1-2 star share 24.4%
+
+Q1 cost vs avg rating: Spearman rho=0.38, p=0.00009
+           restaurants  avg_rating
+band                              
+<=400               16        3.31
+401-700             35        3.48
+701-1000            18        3.51
+1001-1500           21        3.88
+>1500               10        4.09
+
+Best rated under Rs 500 for two:
+       restaurant  cost_for_two  avg
+   Udipi's Upahar           500 4.03
+        KS Bakers           200 3.96
+             GD's           500 3.96
+             Amul           150 3.94
+         Tempteys           350 3.85
+      Cream Stone           350 3.84
+   Karachi Bakery           500 3.80
+Biryanis And More           500 3.74
+
+Q2 with collection tag: 3.77 (n=50) vs without 3.44 (n=50), Mann-Whitney p=0.0035
+Same comparison inside price bands:
+                           size  mean
+cost_band3 has_collection            
+<=500      False             21  3.37
+           True               9  3.33
+501-1000   False             24  3.42
+           True              15  3.68
+>1000      False              5  3.85
+           True              26  3.97
+
+Q3 theme mentions (2428 low-rated vs 3826 five-star reviews with text; keyword match):
+                 low_1_2_star_%  five_star_%
+Service / staff            29.3         40.4
+Food taste                 25.8         29.0
+Price / value              12.1         13.1
+Waiting / slow             18.4          8.2
+Hygiene / stale            12.3          4.2
+Ambience                   14.0         28.1
+Quantity                    7.1          4.3
+
+Q4 most polarising (both >=25% 1-2 star and >=25% 5 star, ranked by combined share):
+               restaurant  avg  low  five  extreme
+         Hotel Zara Hi-Fi 2.40 0.64  0.27     0.91
+           Domino's Pizza 3.09 0.45  0.43     0.88
+      Mohammedia Shawarma 2.99 0.48  0.38     0.86
+   Royal Spicy Restaurant 3.74 0.27  0.57     0.84
+Hitech Bawarchi Food Zone 3.05 0.44  0.39     0.83
+             Being Hungry 3.66 0.28  0.48     0.76
+
+Q5 closes at/after midnight: 3.58 (n=43) vs earlier 3.63 (n=56), Mann-Whitney p=0.91
+
+Reviews with pictures: avg 3.86 (n=1983) vs without 3.54
+
+Cuisines with >=8 restaurants, by avg rating:
+               k   avg
+cuisine               
+Asian         14  3.92
+Continental   21  3.82
+Italian       14  3.78
+Desserts      13  3.70
+South Indian   9  3.66
+North Indian  60  3.60
+Chinese       41  3.46
+Biryani       15  3.38
+Fast Food     13  3.33

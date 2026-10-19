@@ -1,0 +1,14 @@
+Review Count = COUNTROWS(reviews)
+Avg Rating = AVERAGE(reviews[rating])
+% Low = DIVIDE(CALCULATE(COUNTROWS(reviews), reviews[rating] <= 2), [Review Count])
+% Five Star = DIVIDE(CALCULATE(COUNTROWS(reviews), reviews[rating] = 5), [Review Count])
+Avg Cost for Two = AVERAGE(restaurants[cost_for_two])
+
+-- Calculated column on restaurants
+Cost Band =
+SWITCH(TRUE(),
+    restaurants[cost_for_two] <= 400, "1: <=400",
+    restaurants[cost_for_two] <= 700, "2: 401-700",
+    restaurants[cost_for_two] <= 1000, "3: 701-1000",
+    restaurants[cost_for_two] <= 1500, "4: 1001-1500",
+    "5: >1500")

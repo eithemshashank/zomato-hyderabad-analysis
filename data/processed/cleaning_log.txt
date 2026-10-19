@@ -1,0 +1,13 @@
+restaurants raw rows: 105
+duplicate restaurant names: 0
+timings not parseable: 1
+reviews raw rows: 10000
+blank rows dropped: 38
+non-numeric / missing ratings dropped: 1
+reviewer metadata not parseable: 0
+timestamps not parseable: 0
+review restaurants missing from metadata: 0
+restaurants with zero reviews: 5 -> ['Angaara Counts 3', 'IndiBlaze', 'Republic Of Noodles - Lemon Tree Hotel', 'Sweet Basket', 'Wich Please']
+exact duplicate reviews: 0
+reviews clean rows: 9961
+date range: 2016-05-31 16:41:00 -> 2019-05-25 20:23:00

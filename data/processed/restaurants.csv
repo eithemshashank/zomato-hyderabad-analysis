@@ -1,0 +1,106 @@
+restaurant,url,collections,cuisines,timings,cost_for_two,n_cuisines,has_collection,late_night_collection,is_24h,closes_late
+Beyond Flavours,https://www.zomato.com/hyderabad/beyond-flavours-gachibowli,"Food Hygiene Rated Restaurants in Hyderabad, Corporate Favorites, Great Buffets, Top-Rated, Gold Curated, Live Sports Screenings","Chinese, Continental, Kebab, European, South Indian, North Indian","12noon to 3:30pm, 6:30pm to 11:30pm (Mon-Sun)",800,6,True,False,False,False
+Paradise,https://www.zomato.com/hyderabad/paradise-gachibowli,Hyderabad's Hottest,"Biryani, North Indian, Chinese",11 AM to 11 PM,800,3,True,False,False,False
+Flechazo,https://www.zomato.com/hyderabad/flechazo-gachibowli,"Great Buffets, Hyderabad's Hottest","Asian, Mediterranean, North Indian, Desserts","11:30 AM to 4:30 PM, 6:30 PM to 11 PM",1300,4,True,False,False,False
+Shah Ghouse Hotel & Restaurant,https://www.zomato.com/hyderabad/shah-ghouse-hotel-restaurant-gachibowli,Late Night Restaurants,"Biryani, North Indian, Chinese, Seafood, Beverages",12 Noon to 2 AM,800,5,True,True,False,True
+Over The Moon Brew Company,https://www.zomato.com/hyderabad/over-the-moon-brew-company-gachibowli,"Best Bars & Pubs, Food Hygiene Rated Restaurants in Hyderabad, Top-Rated, Gold Curated, Hyderabad's Hottest","Asian, Continental, North Indian, Chinese, Mediterranean","12noon to 11pm (Mon, Tue, Wed, Thu, Sun), 12noon to 12midnight (Fri-Sat)",1200,5,True,False,False,True
+The Fisherman's Wharf,https://www.zomato.com/hyderabad/the-fishermans-wharf-gachibowli,"Sunday Brunches, Corporate Favorites, Great Buffets, Hyderabad's Hottest, Food Hygiene Rated Restaurants in Hyderabad, Top-Rated, Gold Curated","Seafood, Goan, North Indian, Continental, Asian","12Noon to 3:30PM, 4PM to 6:30PM, 7PM to 11:30PM (Mon, Tue, Wed, Thu, Sun), 12Noon to 3:30PM, 4PM to 6:30PM, 7PM to 12Midnight (Fri-Sat)",1500,5,True,False,False,True
+eat.fit,https://www.zomato.com/hyderabad/eat-fit-gachibowli,Food Hygiene Rated Restaurants in Hyderabad,"Healthy Food, North Indian, Continental, South Indian",7 AM to 10 PM,500,4,True,False,False,False
+Shah Ghouse Spl Shawarma,https://www.zomato.com/hyderabad/shah-ghouse-spl-shawarma-gachibowli,,Lebanese,12 Noon to 12 Midnight,300,1,False,False,False,True
+Hyper Local,https://www.zomato.com/hyderabad/hyper-local-gachibowli,"Great Buffets, Live Sports Screenings, Best Bars & Pubs, Trending This Week","American, Chinese, North Indian, Kebab, South Indian",12 Noon to 12 Midnight,1000,5,True,False,False,True
+Cream Stone,https://www.zomato.com/hyderabad/cream-stone-gachibowli,Frozen Delights,"Ice Cream, Desserts","10 AM to 1 AM (Mon-Thu), 10 AM to 1:30 AM (Fri-Sun)",350,2,True,False,False,True
+Sardarji's Chaats & More,https://www.zomato.com/hyderabad/sardarjis-chaats-more-gachibowli,"Street Food, Veggie Friendly, Pocket Friendly","Street Food, North Indian, Fast Food","12 Noon to 3:30 PM, 7 PM to 10:30 PM",400,3,True,False,False,False
+Barbeque Nation,https://www.zomato.com/hyderabad/barbeque-nation-gachibowli,Barbecue & Grill,"Mediterranean, North Indian, Kebab, BBQ","12 Noon to 3:30 PM, 6:30 PM to 11:30 PM",1600,4,True,False,False,False
+Absolute Sizzlers,https://www.zomato.com/hyderabad/absolute-sizzlers-gachibowli,Great Buffets,"Continental, American, Chinese",11:30 AM to 1 AM,750,3,True,False,False,True
+The Lal Street - Bar Exchange,https://www.zomato.com/hyderabad/the-lal-street-bar-exchange-gachibowli,"Corporate Favorites, Happy Hours, Live Sports Screenings, Rooftops, Trending This Week","North Indian, Italian, Finger Food",12noon to 12midnight (Mon-Sun),1300,3,True,False,False,True
+AB's - Absolute Barbecues,https://www.zomato.com/hyderabad/abs-absolute-barbecues-gachibowli,"Barbecue & Grill, Great Buffets, Corporate Favorites, Hyderabad's Hottest","European, Mediterranean, North Indian","12 Noon to 4:30 PM, 6:30 PM to 11:30 PM",1500,3,True,False,False,False
+KFC,https://www.zomato.com/hyderabad/kfc-gachibowli,,"Burger, Fast Food",11 AM to 11 PM,500,2,False,False,False,False
+NorFest - The Dhaba,https://www.zomato.com/hyderabad/norfest-the-dhaba-gachibowli,,North Indian,12 Noon to 10:30 PM,550,1,False,False,False,False
+Hotel Zara Hi-Fi,https://www.zomato.com/hyderabad/hotel-zara-gachibowli,,"Chinese, North Indian",11:30 AM to 1 AM,400,2,False,False,False,True
+10 Downing Street,https://www.zomato.com/hyderabad/10-downing-street-gachibowli,Trending This Week,"North Indian, Chinese, Continental",12 Noon to 12 Midnight,1900,3,True,False,False,True
+Pakwaan Grand,https://www.zomato.com/hyderabad/pakwaan-grand-gachibowli,Trending This Week,"North Indian, Chinese, Biryani",12 Noon to 11 PM,400,3,True,False,False,False
+13 Dhaba,https://www.zomato.com/hyderabad/13-dhaba-gachibowli,Veggie Friendly,North Indian,"12:30 PM to 10 PM (Tue-Sun), Mon Closed",450,1,True,False,False,False
+Jonathan's Kitchen - Holiday Inn Express & Suites,https://www.zomato.com/hyderabad/jonathans-kitchen-holiday-inn-express-suites-gachibowli,"Great Italian, Sunday Brunches","North Indian, Japanese, Italian, Salad, Sushi","11:30 AM to 3 PM, 7 PM to 11 PM",1900,5,True,False,False,False
+B-Dubs,https://www.zomato.com/hyderabad/b-dubs-gachibowli,Hyderabad's Hottest,American,"11am to 11:30pm (Mon, Tue, Wed, Thu, Sun), 11am to 12midnight (Fri-Sat)",1600,1,True,False,False,True
+Amul,https://www.zomato.com/hyderabad/amul-gachibowli,,"Ice Cream, Desserts",10 AM to 5 AM,150,2,False,False,False,True
+SKYHY,https://www.zomato.com/hyderabad/skyhy-gachibowli,"Live Sports Screenings, Gigs and Events","North Indian, Chinese, Continental","12 Noon to 12 Midnight (Mon-Thu, Sun), 12 Noon to 1 AM (Fri-Sat)",1400,3,True,False,False,True
+Tiki Shack,https://www.zomato.com/hyderabad/tiki-shack-gachibowli,,Continental,"12Noon to 11PM (Mon-Thu),12Noon to 11:30PM (Fri-Sun)",1000,1,False,False,False,False
+Mustang Terrace Lounge,https://www.zomato.com/hyderabad/mustang-terrace-lounge-gachibowli,"Rooftops, Live Sports Screenings, Best Bars & Pubs","Mexican, Italian, North Indian, Chinese, Salad","12 Noon to 11:30 PM (Mon-Wed), 12 Noon to 1 AM (Fri-Sat), 12 Noon to 12 Midnight (Sun), Thu Closed",1300,5,True,False,False,True
+"3B's - Buddies, Bar & Barbecue",https://www.zomato.com/hyderabad/3bs-buddies-bar-barbecue-gachibowli,"Barbecue & Grill, Live Sports Screenings","North Indian, Mediterranean, European","12 Noon to 4 PM, 6:30 PM to 11:30 PM",1100,3,True,False,False,False
+Behrouz Biryani,https://www.zomato.com/hyderabad/behrouz-biryani-gachibowli,,"Mughlai, Biryani",10 AM to 1 AM,600,2,False,False,False,True
+Hunger Maggi Point,https://www.zomato.com/hyderabad/hunger-maggi-point-gachibowli,,Fast Food,4:30 PM to 5:30 AM,200,1,False,False,False,True
+Pot Pourri,https://www.zomato.com/hyderabad/pot-pourri-gachibowli,,"Andhra, South Indian, North Indian",,900,3,False,False,,
+Pista House,https://www.zomato.com/hyderabad/pista-house-2-gachibowli,Haleem,"Bakery, North Indian, Mughlai, Juices, Chinese",11 AM to 12 Midnight,1000,5,True,False,False,True
+Marsala Food Company,https://www.zomato.com/hyderabad/marsala-food-company-gachibowli,"Mandi, Great Buffets, The ‘Must Visit’ Eateries","Arabian, North Indian, Chinese","12noon to 4pm, 7pm to 12midnight (Mon-Sun)",700,3,True,False,False,True
+Club Rogue,https://www.zomato.com/hyderabad/club-rogue-gachibowli,,"North Indian, Fast Food",11 AM to 12 Midnight,900,2,False,False,False,True
+Mazzo - Marriott Executive Apartments,https://www.zomato.com/hyderabad/mazzo-marriott-executive-apartments-gachibowli,"Top-Rated, Gold Curated, Fancy and Fun","Italian, North Indian, South Indian, Asian",6am to 12midnight (Mon-Sun),1700,4,True,False,False,True
+Green Bawarchi Restaurant,https://www.zomato.com/hyderabad/green-bawarchi-restaurant-gachibowli,,"North Indian, Chinese, Biryani",12 Noon to 11 PM,700,3,False,False,False,False
+Banana Leaf Multicuisine Restaurant,https://www.zomato.com/hyderabad/banana-leaf-multicuisine-restaurant-gachibowli,Great Buffets,"Biryani, South Indian, North Indian, Chinese, Andhra","12:30 PM to 3:30 PM, 7 PM to 10:40 PM",700,5,True,False,False,False
+Kritunga Restaurant,https://www.zomato.com/hyderabad/kritunga-restaurant-gachibowli,,"Andhra, Biryani, Hyderabadi, North Indian","12 Noon to 4 PM, 7 PM to 11 PM",500,4,False,False,False,False
+The Glass Onion,https://www.zomato.com/hyderabad/the-glass-onion-gachibowli,Fancy and Fun,"North Indian, Continental, Italian, Asian","12noon to 11pm (Mon, Tue, Wed, Thu, Sun), 12noon to 12midnight (Fri-Sat)",1200,4,True,False,False,True
+Deli 9 Bistro,https://www.zomato.com/hyderabad/deli-9-bistro-gachibowli,,"Cafe, Continental, Desserts",12 Noon to 10:30 PM,700,3,False,False,False,False
+Frio Bistro,https://www.zomato.com/hyderabad/frio-bistro-gachibowli,,"European, Italian, Continental, Spanish",12noon to 11pm (Mon-Sun),1200,4,False,False,False,False
+Karachi Bakery,https://www.zomato.com/hyderabad/karachi-bakery-gachibowli,,"Bakery, Fast Food, Desserts",10 AM to 10 PM,500,3,False,False,False,False
+Karachi Cafe,https://www.zomato.com/hyderabad/karachi-cafe-gachibowli,,"Cafe, Desserts, Fast Food",10 AM to 10 PM,600,3,False,False,False,False
+The Foodie Monster Kitchen,https://www.zomato.com/hyderabad/the-foodie-monster-kitchen-gachibowli,"Great Breakfasts, Late Night Restaurants, Best shawarmas","American, Wraps, Desserts",7 AM to 1 AM,500,3,True,True,False,True
+La La Land - Bar & Kitchen,https://www.zomato.com/hyderabad/la-la-land-bar-kitchen-gachibowli,"Great Buffets, Trending This Week","Finger Food, North Indian, Kebab, Chinese",12 Noon to 11:30 PM,1000,4,True,False,False,False
+Owm Nom Nom,https://www.zomato.com/hyderabad/owm-nom-nom-gachibowli,,"Chinese, Biryani, Andhra, North Indian",12Noon to 11:30PM (Mon-Sun),900,4,False,False,False,False
+Ulavacharu,https://www.zomato.com/hyderabad/ulavacharu-gachibowli,"Function Venues, Regional Favorites","Andhra, North Indian, Chinese",12 Noon to 11:30 PM,1400,3,True,False,False,False
+Shanghai Chef 2,https://www.zomato.com/hyderabad/shanghai-chef-2-gachibowli,Pan-Asian Delicacies,"Chinese, Thai, Indonesian, Asian",12 Noon to 11 PM,800,4,True,False,False,False
+Udipi's Upahar,https://www.zomato.com/hyderabad/udipis-upahar-gachibowli,,"South Indian, North Indian, Chinese",6 AM to 10:30 PM,500,3,False,False,False,False
+Mathura Vilas,https://www.zomato.com/hyderabad/mathura-vilas-gachibowli,"Veggie Friendly, Terrific Thalis","South Indian, North Indian, Chinese","11:30 AM to 3:30 PM, 6:45 PM to 11:30 PM",500,3,True,False,False,False
+Gal Punjab Di,https://www.zomato.com/hyderabad/gal-punjab-di-gachibowli,,"North Indian, Continental","11:55 AM to 4 PM, 7 PM to 11:15 PM",800,2,False,False,False,False
+Hitech Bawarchi Food Zone,https://www.zomato.com/hyderabad/hitech-bawarchi-food-zone-gachibowli,,"Biryani, North Indian, Chinese",12 Noon to 11 PM,500,3,False,False,False,False
+Biryanis And More,https://www.zomato.com/hyderabad/biryanis-and-more-gachibowli,,"North Indian, Biryani, Chinese",11 AM to 11 PM,500,3,False,False,False,False
+Diners Pavilion,https://www.zomato.com/hyderabad/diners-pavilion-gachibowli,"Great Buffets, Live Sports Screenings","Chinese, Continental, Italian","12noon to 4:30pm, 6:30pm to 11:30pm (Mon, Tue, Wed, Fri, Sat), Closed (Thu),12noon to 12midnight (Sun)",1200,3,True,False,False,True
+Asian Meal Box,https://www.zomato.com/hyderabad/asian-meal-box-gachibowli,,Asian,"12noon to 12midnight (Mon, Tue, Wed, Thu, Sun), 12noon to 1am (Fri-Sat)",200,1,False,False,False,True
+Cafe Eclat,https://www.zomato.com/hyderabad/cafe-eclat-gachibowli,Sneak Peek Hyderabad,"Cafe, Bakery",8 AM to 11:30 PM,700,2,True,False,False,False
+Feast - Sheraton Hyderabad Hotel,https://www.zomato.com/hyderabad/feast-sheraton-hyderabad-hotel-gachibowli,"Sunday Brunches, Great Breakfasts, Function Venues, Ramzan Mubarak","Modern Indian, Asian, Continental, Italian","6:30am to 10:30am, 12:30pm to 3pm, 7pm to 11pm (Mon),6:30am to 10:30am, 12:30pm to 3pm, 7:30pm to 11pm (Tue-Sat),6:30am to 10:30am, 12:30pm to 3:30pm, 7pm to 11pm (Sun)",2500,4,True,False,False,False
+Being Hungry,https://www.zomato.com/hyderabad/being-hungry-gachibowli,,"North Indian, Chinese","12 Noon to 3 PM, 7 PM to 11:30 PM",450,2,False,False,False,False
+Tempteys,https://www.zomato.com/hyderabad/tempteys-gachibowli,Best Milkshakes,"Desserts, Beverages",11:30 AM to 1 AM,350,2,True,False,False,True
+KS Bakers,https://www.zomato.com/hyderabad/ks-bakers-gachibowli,,"Bakery, Desserts, Fast Food",9 AM to 10 PM,200,3,False,False,False,False
+PourHouse7,https://www.zomato.com/hyderabad/pourhouse7-gachibowli,"Happy Hours, Top Drinking Destinations, Corporate Favorites","North Indian, Continental, Chinese, Italian","12 Noon to 12 Midnight (Mon-Thu, Sun), 12 Noon to 1 AM (Fri-Sat)",1200,4,True,False,False,True
+Prism Club & Kitchen,https://www.zomato.com/hyderabad/prism-club-kitchen-gachibowli,"Sneak Peek Hyderabad, Best Bars & Pubs, Gigs and Events","Kebab, Continental, Italian, North Indian",5pm to 12midnight (Mon-Sun),1200,4,True,False,False,True
+Shree Santosh Dhaba Family Restaurant,https://www.zomato.com/hyderabad/shree-santosh-dhaba-family-restaurant-gachibowli,,"North Indian, Chinese, Fast Food",11 AM to 11:30 PM,500,3,False,False,False,False
+Dine O China,https://www.zomato.com/hyderabad/dine-o-china-gachibowli,,"Chinese, Asian, Momos",11:30AM to 11PM (Mon-Sun),850,3,False,False,False,False
+Hyderabad Chefs,https://www.zomato.com/hyderabad/hyderabad-chefs-gachibowli,,"North Indian, Chinese",12 Noon to 10:30 PM,600,2,False,False,False,False
+Komatose - Holiday Inn Express & Suites,https://www.zomato.com/hyderabad/komatose-holiday-inn-express-suites-gachibowli,"Happy Hours, Top-Rated, Gold Curated","North Indian, Chinese, Japanese, Sushi",1 PM to 11 PM,1500,4,True,False,False,False
+Aromas@11SIX,https://www.zomato.com/hyderabad/aromas11six-gachibowli,,"North Indian, Chinese, Mughlai, Biryani",11:30 AM to 12 Midnight,750,4,False,False,False,True
+Yum Yum Tree - The Arabian Food Court,https://www.zomato.com/hyderabad/yum-yum-tree-the-arabian-food-court-gachibowli,Food Hygiene Rated Restaurants in Hyderabad,"North Indian, Hyderabadi",12 Noon to 12 Midnight,1200,2,True,False,False,True
+The Tilt Bar Republic,https://www.zomato.com/thetiltbarrepublic,"Gigs and Events, Corporate Favorites","North Indian, Continental, Italian",12noon to 12midnight (Mon-Sun),1500,3,True,False,False,True
+The Indi Grill,https://www.zomato.com/hyderabad/the-indi-grill-gachibowli,"Food Hygiene Rated Restaurants in Hyderabad, Great Buffets, Hyderabad's Hottest","BBQ, Asian, Modern Indian",12noon to 11pm (Mon-Sun),1500,3,True,False,False,False
+Urban Asia - Kitchen & Bar,https://www.zomato.com/hyderabad/urban-asia-kitchen-bar-gachibowli,,"Asian, Thai, Chinese, Sushi, Momos","12 Noon to 3 PM, 7 PM to 11 PM",1100,5,False,False,False,False
+Eat India Company,https://www.zomato.com/hyderabad/eat-india-company-gachibowli,,"North Indian, Mughlai, Beverages","12 Noon to 3 PM, 7 PM to 11 PM",1300,3,False,False,False,False
+Labonel,https://www.zomato.com/hyderabad/labonel-gachibowli,Best Bakeries,"Bakery, Desserts","11 AM to 8 PM (Mon-Sat), Sun Closed",1000,2,True,False,False,False
+Driven Cafe,https://www.zomato.com/hyderabad/driven-cafe-gachibowli,,"Cafe, Fast Food, Beverages",4 AM to 12 Midnight,600,3,False,False,False,True
+Faasos,https://www.zomato.com/hyderabad/faasos-gachibowli,,"Fast Food, Biryani, Desserts",9 AM to 1 AM,600,3,False,False,False,True
+Royal Spicy Restaurant,https://www.zomato.com/hyderabad/royal-spicy-restaurant-gachibowli,,"North Indian, South Indian",10:30 AM to 11 PM,700,2,False,False,False,False
+The Old Madras Baking Company,https://www.zomato.com/hyderabad/the-old-madras-baking-company-gachibowli,,Bakery,7 AM to 11 PM,350,1,False,False,False,False
+Squeeze @ The Lime,https://www.zomato.com/hyderabad/squeeze-the-lime-gachibowli,Veggie Friendly,"Italian, North Indian, Chinese, Salad","7 AM to 10:30 AM, 12:30 PM to 3:30 PM, 7 PM to 11 PM",650,4,True,False,False,False
+Khaan Saab,https://www.zomato.com/hyderabad/khaan-saab-gachibowli,New on Gold,"North Indian, Mughlai","12 Noon to 3:30 PM, 7 PM to 11:30 PM",1100,2,True,False,False,False
+Olive Garden,https://www.zomato.com/hyderabad/olive-garden-gachibowli,,"North Indian, Chinese, Continental, Biryani","12 Noon to 3:30 PM, 7 PM to 11 PM",700,4,False,False,False,False
+Tandoori Food Works,https://www.zomato.com/hyderabad/tandoori-food-works-gachibowli,Brilliant Biryanis,"North Indian, Burger, Kebab","12noon to 12midnight (Mon, Tue, Wed, Thu, Sun), 12noon to 1am (Fri-Sat)",500,3,True,False,False,True
+Delhi-39,https://www.zomato.com/hyderabad/delhi-39-gachibowli,,"North Indian, Chinese",11am to 11pm (Mon-Sun),600,2,False,False,False,False
+Al Saba Restaurant,https://www.zomato.com/hyderabad/al-saba-restaurant-gachibowli,,"North Indian, Chinese, Seafood, Biryani, Hyderabadi",6 AM to 11:30 PM,750,5,False,False,False,False
+GD's,https://www.zomato.com/hyderabad/gds-gachibowli,,"Burger, American",11:30 AM to 5 AM,500,2,False,False,False,True
+T Grill,https://www.zomato.com/hyderabad/t-grill-gachibowli,,"North Indian, Andhra, Biryani, Chinese","12:30 PM to 3:30 PM, 7 PM to 11 PM",700,4,False,False,False,False
+Momos Delight,https://www.zomato.com/hyderabad/momos-delight-gachibowli,,Momos,6pm to 2am (Mon-Sun),200,1,False,False,False,True
+The Chocolate Room,https://www.zomato.com/hyderabad/the-chocolate-room-gachibowli,,"Cafe, Desserts",10 AM to 12 Midnight,600,2,False,False,False,True
+American Wild Wings,https://www.zomato.com/hyderabad/american-wild-wings-gachibowli,Food Hygiene Rated Restaurants in Hyderabad,"American, Fast Food, Salad, Burger",12 Noon to 4 AM,600,4,True,False,False,True
+Domino's Pizza,https://www.zomato.com/hyderabad/dominos-pizza-4-gachibowli,,"Fast Food, Pizza",11 AM to 11 PM,400,2,False,False,False,False
+Mohammedia Shawarma,https://www.zomato.com/hyderabad/mohammedia-shawarma-gachibowli,,"Street Food, Arabian",1 PM to 1 AM,150,2,False,False,False,True
+Arena Eleven,https://www.zomato.com/hyderabad/arena-eleven-gachibowli,New on Gold,Continental,12 Noon to 12 Midnight,1600,1,True,False,False,True
+Cascade - Radisson Hyderabad Hitec City,https://www.zomato.com/hyderabad/cascade-radisson-hyderabad-hitec-city-gachibowli,,"North Indian, Italian, Continental, Asian",24 Hours,1800,4,False,False,True,True
+Collage - Hyatt Hyderabad Gachibowli,https://www.zomato.com/hyderabad/collage-hyatt-hyderabad-gachibowli-gachibowli,Sunday Brunches,"Continental, Italian, North Indian, Chinese, Asian",24 Hours (Mon-Sun),2800,5,True,False,True,True
+Zing's Northeast Kitchen,https://www.zomato.com/hyderabad/zings-northeast-kitchen-gachibowli,,"North Eastern, Momos","11:30 AM to 4 PM, 7 PM to 11 PM",550,2,False,False,False,False
+Dunkin' Donuts,https://www.zomato.com/hyderabad/dunkin-donuts-gachibowli,,"Desserts, Cafe, Beverages, Burger, Fast Food",10 AM to 11 PM,550,5,False,False,False,False
+Desi Bytes,https://www.zomato.com/hyderabad/desi-bytes-gachibowli,,"North Indian, Chinese","1 PM to 2 AM (Mon, Wed-Sun), Tue Closed",400,2,False,False,False,True
+Hyderabadi Daawat,https://www.zomato.com/hyderabad/hyderabadi-daawat-1-gachibowli,Food Hygiene Rated Restaurants in Hyderabad,"Hyderabadi, Chinese, Mughlai",12:30pm to 11:30pm (Mon-Sun),600,3,True,False,False,False
+Zega - Sheraton Hyderabad Hotel,https://www.zomato.com/hyderabad/zega-sheraton-hyderabad-hotel-gachibowli,,"Asian, Sushi",12Noon to 2AM (Mon-Sun),1750,2,False,False,False,True
+Triptify,https://www.zomato.com/hyderabad/triptify-gachibowli,,North Indian,11 AM to 11 PM,400,1,False,False,False,False
+Chinese Pavilion,https://www.zomato.com/hyderabad/chinese-pavilion-gachibowli,,"Chinese, Seafood","12 Noon to 3:30 PM, 7 PM to 11 PM",1000,2,False,False,False,False
+IndiBlaze,https://www.zomato.com/hyderabad/indiblaze-gachibowli,,"Fast Food, Salad",11 AM to 11 PM,600,2,False,False,False,False
+Sweet Basket,https://www.zomato.com/hyderabad/sweet-basket-gachibowli,,"Bakery, Mithai","10 AM to 10 PM (Mon-Thu), 8 AM to 10:30 PM (Fri-Sun)",200,2,False,False,False,False
+Angaara Counts 3,https://www.zomato.com/hyderabad/angaara-counts-3-gachibowli,,"North Indian, Biryani, Chinese",12 Noon to 11 PM,500,3,False,False,False,False
+Wich Please,https://www.zomato.com/hyderabad/wich-please-1-gachibowli,,Fast Food,8am to 12:30AM (Mon-Sun),250,1,False,False,False,True
+Republic Of Noodles - Lemon Tree Hotel,https://www.zomato.com/hyderabad/republic-of-noodles-lemon-tree-hotel-gachibowli,Pan-Asian Delicacies,"Thai, Asian, Chinese, Malaysian","11:30 AM to 3 PM, 7 PM to 12 Midnight",1700,4,True,False,False,True
