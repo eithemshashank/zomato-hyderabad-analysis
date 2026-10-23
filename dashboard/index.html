@@ -1,0 +1,243 @@
+<title>Zomato Hyderabad Dashboard</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: filter bar, five headline tiles, then a grid of chart cards, then a full table view. Blue = 5-star / main series, orange = low-rated / second series. */
+:root{
+  --page:#f3f3f1; --surface:#fcfcfb; --ink:#0b0b0b; --ink2:#52514e; --muted:#7b7a75; --line:#e2e1dc; --grid:#ecebe7;
+  --s1:#2a78d6; --s2:#eb6834; --neutral:#b9b8b2; --focus:#2a78d6;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --page:#121211; --surface:#1a1a19; --ink:#f0efec; --ink2:#c3c2b7; --muted:#97968e; --line:#2c2c2a; --grid:#242422;
+  --s1:#3987e5; --s2:#d95926; --neutral:#4a4a47; --focus:#6da7ec; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --page:#121211; --surface:#1a1a19; --ink:#f0efec; --ink2:#c3c2b7; --muted:#97968e; --line:#2c2c2a; --grid:#242422;
+  --s1:#3987e5; --s2:#d95926; --neutral:#4a4a47; --focus:#6da7ec; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink);font:14px/1.5 var(--sans);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 48px}
+.wrap{max-width:1180px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+h1{font-size:1.6rem;margin:0;font-weight:650;letter-spacing:-.015em}
+h2{font-size:.95rem;margin:0;font-weight:600}
+.sub{color:var(--ink2);margin:4px 0 0;max-width:80ch}
+.findings{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.finding{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 14px;min-width:0}
+.finding b{display:block;font-size:.95rem;margin-bottom:2px}
+.finding span{color:var(--ink2);font-size:.86rem}
+.filters{display:flex;flex-wrap:wrap;gap:12px 16px;align-items:end;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 14px}
+.filters label{display:flex;flex-direction:column;gap:4px;font-size:.78rem;color:var(--ink2);min-width:0}
+select,button{font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:7px 10px}
+select{min-width:150px;max-width:100%}
+button{cursor:pointer}
+select:focus-visible,button:focus-visible,th button:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 14px;min-width:0}
+.tile .l{font-size:.78rem;color:var(--ink2)}
+.tile .v{font-size:1.65rem;font-weight:650;font-variant-numeric:tabular-nums;line-height:1.2}
+.tile .d{font-size:.75rem;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,480px),1fr));gap:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px 16px;min-width:0;display:flex;flex-direction:column;gap:10px}
+.card p{margin:0;color:var(--ink2);font-size:.82rem}
+.rows{display:flex;flex-direction:column;gap:8px}
+.row{display:grid;grid-template-columns:minmax(80px,44%) 1fr auto;gap:10px;align-items:center;font-size:.82rem;min-width:0}
+.row .name{color:var(--ink2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row .val{font-variant-numeric:tabular-nums;color:var(--ink);min-width:3.2em;text-align:right}
+.track{height:18px;display:flex;align-items:center}
+.bar{height:16px;max-width:100%;border-radius:0 4px 4px 0;background:var(--s1);min-width:2px}
+.bar.o{background:var(--s2)}
+.bar.n{background:var(--neutral)}
+.bar.sel{outline:2px solid var(--ink);outline-offset:1px}
+.pair{display:flex;flex-direction:column;gap:2px}
+.pair .bar{height:10px}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.8rem;color:var(--ink2)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.empty{color:var(--muted);padding:12px 0}
+svg text{fill:var(--ink2);font-family:var(--sans)}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:.84rem}
+th,td{padding:8px 12px;border-bottom:1px solid var(--line);text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+th:first-child,td:first-child{text-align:left;white-space:normal;min-width:180px}
+th{font-weight:600;color:var(--ink2);font-size:.78rem}
+th button{all:unset;cursor:pointer;display:inline-flex;gap:4px;align-items:center}
+tr:last-child td{border-bottom:0}
+.note{font-size:.8rem;color:var(--muted);max-width:100ch}
+#tip{position:fixed;z-index:20;pointer-events:none;background:var(--ink);color:var(--page);padding:6px 9px;border-radius:6px;font-size:.78rem;max-width:260px;display:none}
+@media (prefers-reduced-motion:no-preference){.bar{transition:width .25s}}
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Zomato Hyderabad: what drives a rating?</h1>
+    <p class="sub" id="scope"></p>
+  </header>
+
+  <section class="findings" aria-label="Key findings, all restaurants">
+    <div class="finding"><b>Price predicts rating</b><span>Restaurants over Rs 1,500 for two average 4.09, against 3.31 at Rs 400 or less.</span></div>
+    <div class="finding"><b>Collection tags are mostly price</b><span>Tagged places average 3.77 vs 3.44, but the gap shrinks to about 0.1 inside the same price band.</span></div>
+    <div class="finding"><b>Slow service and hygiene</b><span>Low-rated reviews mention waiting about 2x and hygiene about 3x as often as 5-star reviews.</span></div>
+  </section>
+
+  <section class="filters" aria-label="Filters">
+    <label>Cost for two<select id="fBand"></select></label>
+    <label>Cuisine<select id="fCuisine"></select></label>
+    <label>Collection tag<select id="fTag"><option value="all">All</option><option value="yes">Has a tag</option><option value="no">No tag</option></select></label>
+    <button id="reset" type="button">Reset filters</button>
+  </section>
+
+  <section class="tiles" id="tiles" aria-live="polite"></section>
+
+  <section class="grid">
+    <div class="card"><h2>Average rating by cost for two</h2><p>Respects the cuisine and tag filters. The outlined bar is the cost band you selected.</p><div class="rows" id="cBands"></div></div>
+    <div class="card"><h2>How reviewers rated</h2><p id="distNote"></p><div class="rows" id="cDist"></div></div>
+    <div class="card"><h2>What reviews talk about</h2>
+      <div class="legend"><span><i style="background:var(--s2)"></i>1-2 star reviews</span><span><i style="background:var(--s1)"></i>5 star reviews</span></div>
+      <p>Share of written reviews that mention each theme (keyword match, so read the direction, not the exact figure).</p><div class="rows" id="cThemes"></div></div>
+    <div class="card"><h2>Top 10 restaurants</h2><p>Highest average rating among restaurants matching the filters.</p><div class="rows" id="cTop"></div></div>
+    <div class="card" style="grid-column:1/-1"><h2>Loved by some, hated by others</h2>
+      <div class="legend"><span><i style="background:var(--s2)"></i>Polarising: at least 25% five-star and at least 25% 1-2 star</span><span><i style="background:var(--s1)"></i>Other restaurants</span></div>
+      <div id="cScatter"></div></div>
+  </section>
+
+  <section>
+    <h2 style="margin-bottom:8px">Table view</h2>
+    <div class="tablewrap"><table id="tbl"><caption class="note" style="text-align:left;padding:8px 12px;caption-side:top">Restaurants matching the filters. Click a column heading to sort.</caption><thead></thead><tbody></tbody></table></div>
+  </section>
+
+  <p class="note">Data: 105 Hyderabad restaurants and 9,961 customer reviews, mostly May 2018 to May 2019. About 100 reviews per restaurant, so this is recent sentiment and not lifetime ratings. Five restaurants have no reviews and are left out. Price and rating move together, but this data cannot show that price causes better ratings. Source and licence of the original dataset are still to be confirmed.</p>
+</div>
+<div id="tip" role="tooltip"></div>
+
+<script>
+const D = {"restaurants":[{"name":"Beyond Flavours","cost":800,"late":false,"cuisines":["Chinese","Continental","Kebab","European","South Indian","North Indian"],"collections":["Food Hygiene Rated Restaurants in Hyderabad","Corporate Favorites","Great Buffets","Top-Rated","Gold Curated","Live Sports Screenings"],"c9":[8,0,4,0,6,0,16,0,66],"pics":11,"lowN":12,"fiveN":66,"lowT":[9,5,1,7,4,5,0],"fiveT":[51,15,7,4,0,40,0]},{"name":"Paradise","cost":800,"late":false,"cuisines":["Biryani","North Indian","Chinese"],"collections":["Hyderabad's Hottest"],"c9":[3,0,0,0,1,0,16,0,80],"pics":2,"lowN":3,"fiveN":80,"lowT":[1,0,1,1,0,1,0],"fiveT":[67,37,3,1,4,24,2]},{"name":"Flechazo","cost":1300,"late":false,"cuisines":["Asian","Mediterranean","North Indian","Desserts"],"collections":["Great Buffets","Hyderabad's Hottest"],"c9":[2,0,4,0,3,0,8,0,83],"pics":14,"lowN":6,"fiveN":83,"lowT":[4,1,1,4,2,3,0],"fiveT":[59,18,8,3,10,32,0]},{"name":"Shah Ghouse Hotel & Restaurant","cost":800,"late":true,"cuisines":["Biryani","North Indian","Chinese","Seafood","Beverages"],"collections":["Late Night Restaurants"],"c9":[27,0,8,0,12,0,23,0,30],"pics":16,"lowN":35,"fiveN":30,"lowT":[9,5,4,3,5,1,2],"fiveT":[4,18,1,2,4,2,3]},{"name":"Over The Moon Brew Company","cost":1200,"late":true,"cuisines":["Asian","Continental","North Indian","Chinese","Mediterranean"],"collections":["Best Bars & Pubs","Food Hygiene Rated Restaurants in Hyderabad","Top-Rated","Gold Curated","Hyderabad's Hottest"],"c9":[6,0,1,0,6,0,27,0,60],"pics":17,"lowN":7,"fiveN":60,"lowT":[6,1,2,2,2,3,0],"fiveT":[40,4,3,2,2,29,0]},{"name":"The Fisherman's Wharf","cost":1500,"late":true,"cuisines":["Seafood","Goan","North Indian","Continental","Asian"],"collections":["Sunday Brunches","Corporate Favorites","Great Buffets","Hyderabad's Hottest","Food Hygiene Rated Restaurants in Hyderabad","Top-Rated","Gold Curated"],"c9":[5,0,5,0,5,0,33,0,52],"pics":32,"lowN":10,"fiveN":52,"lowT":[6,3,1,4,2,3,0],"fiveT":[33,18,14,6,12,39,1]},{"name":"eat.fit","cost":500,"late":false,"cuisines":["Healthy Food","North Indian","Continental","South Indian"],"collections":["Food Hygiene Rated Restaurants in Hyderabad"],"c9":[27,0,7,0,15,0,21,0,30],"pics":27,"lowN":34,"fiveN":30,"lowT":[2,10,7,3,4,2,9],"fiveT":[3,22,7,2,3,2,7]},{"name":"Shah Ghouse Spl Shawarma","cost":300,"late":true,"cuisines":["Lebanese"],"collections":[],"c9":[23,0,10,0,8,0,19,0,40],"pics":8,"lowN":33,"fiveN":40,"lowT":[1,5,3,3,5,2,2],"fiveT":[4,17,7,3,0,0,3]},{"name":"Hyper Local","cost":1000,"late":true,"cuisines":["American","Chinese","North Indian","Kebab","South Indian"],"collections":["Great Buffets","Live Sports Screenings","Best Bars & Pubs","Trending This Week"],"c9":[18,0,4,0,14,0,24,0,40],"pics":24,"lowN":22,"fiveN":40,"lowT":[13,3,2,10,3,8,0],"fiveT":[30,9,5,4,0,28,2]},{"name":"Cream Stone","cost":350,"late":true,"cuisines":["Ice Cream","Desserts"],"collections":["Frozen Delights"],"c9":[18,0,3,0,6,1,21,0,51],"pics":29,"lowN":21,"fiveN":51,"lowT":[3,5,4,1,0,0,3],"fiveT":[8,23,7,15,0,5,1]},{"name":"Sardarji's Chaats & More","cost":400,"late":false,"cuisines":["Street Food","North Indian","Fast Food"],"collections":["Street Food","Veggie Friendly","Pocket Friendly"],"c9":[24,0,6,0,15,0,31,0,24],"pics":19,"lowN":30,"fiveN":24,"lowT":[2,13,3,3,1,1,3],"fiveT":[0,13,5,1,0,0,2]},{"name":"Barbeque Nation","cost":1600,"late":false,"cuisines":["Mediterranean","North Indian","Kebab","BBQ"],"collections":["Barbecue & Grill"],"c9":[6,0,3,1,9,0,34,1,46],"pics":24,"lowN":9,"fiveN":46,"lowT":[3,4,0,3,3,2,1],"fiveT":[37,14,6,6,5,11,1]},{"name":"Absolute Sizzlers","cost":750,"late":true,"cuisines":["Continental","American","Chinese"],"collections":["Great Buffets"],"c9":[20,0,7,0,9,0,19,0,45],"pics":11,"lowN":27,"fiveN":45,"lowT":[12,2,4,8,2,4,3],"fiveT":[32,14,6,2,1,18,0]},{"name":"The Lal Street - Bar Exchange","cost":1300,"late":true,"cuisines":["North Indian","Italian","Finger Food"],"collections":["Corporate Favorites","Happy Hours","Live Sports Screenings","Rooftops","Trending This Week"],"c9":[15,0,6,0,18,0,41,0,20],"pics":28,"lowN":21,"fiveN":20,"lowT":[15,1,1,9,1,2,1],"fiveT":[10,3,7,3,0,10,2]},{"name":"AB's - Absolute Barbecues","cost":1500,"late":false,"cuisines":["European","Mediterranean","North Indian"],"collections":["Barbecue & Grill","Great Buffets","Corporate Favorites","Hyderabad's Hottest"],"c9":[0,0,2,0,1,0,4,0,93],"pics":7,"lowN":2,"fiveN":93,"lowT":[1,0,0,0,1,0,0],"fiveT":[74,14,1,4,1,17,0]},{"name":"KFC","cost":500,"late":false,"cuisines":["Burger","Fast Food"],"collections":[],"c9":[36,0,8,0,14,0,19,0,23],"pics":4,"lowN":44,"fiveN":23,"lowT":[7,5,2,8,1,2,2],"fiveT":[1,2,1,1,0,1,0]},{"name":"NorFest - The Dhaba","cost":550,"late":false,"cuisines":["North Indian"],"collections":[],"c9":[8,0,1,0,13,0,36,0,42],"pics":26,"lowN":9,"fiveN":42,"lowT":[0,5,2,2,3,3,2],"fiveT":[10,22,15,1,0,6,8]},{"name":"Hotel Zara Hi-Fi","cost":400,"late":true,"cuisines":["Chinese","North Indian"],"collections":[],"c9":[53,0,11,0,6,0,3,0,27],"pics":5,"lowN":64,"fiveN":27,"lowT":[4,22,5,4,9,3,7],"fiveT":[3,3,3,0,2,0,1]},{"name":"10 Downing Street","cost":1900,"late":true,"cuisines":["North Indian","Chinese","Continental"],"collections":["Trending This Week"],"c9":[7,0,5,0,14,0,49,0,25],"pics":24,"lowN":12,"fiveN":25,"lowT":[8,1,1,3,3,5,0],"fiveT":[9,8,3,1,0,19,1]},{"name":"Pakwaan Grand","cost":400,"late":false,"cuisines":["North Indian","Chinese","Biryani"],"collections":["Trending This Week"],"c9":[34,0,12,0,20,0,17,0,17],"pics":10,"lowN":46,"fiveN":17,"lowT":[10,8,0,4,8,2,1],"fiveT":[1,5,1,0,0,0,4]},{"name":"13 Dhaba","cost":450,"late":false,"cuisines":["North Indian"],"collections":["Veggie Friendly"],"c9":[22,0,7,0,8,0,27,0,36],"pics":19,"lowN":29,"fiveN":36,"lowT":[3,4,0,0,2,1,3],"fiveT":[5,12,3,2,1,3,1]},{"name":"Jonathan's Kitchen - Holiday Inn Express & Suites","cost":1900,"late":false,"cuisines":["North Indian","Japanese","Italian","Salad","Sushi"],"collections":["Great Italian","Sunday Brunches"],"c9":[16,0,9,0,12,0,31,1,31],"pics":36,"lowN":25,"fiveN":31,"lowT":[16,8,9,11,4,5,0],"fiveT":[18,15,4,7,8,18,1]},{"name":"B-Dubs","cost":1600,"late":true,"cuisines":["American"],"collections":["Hyderabad's Hottest"],"c9":[1,0,1,0,2,0,8,0,88],"pics":11,"lowN":2,"fiveN":88,"lowT":[1,1,1,0,0,1,0],"fiveT":[52,14,5,4,0,18,1]},{"name":"Amul","cost":150,"late":true,"cuisines":["Ice Cream","Desserts"],"collections":[],"c9":[16,0,5,0,6,0,15,0,58],"pics":8,"lowN":21,"fiveN":57,"lowT":[4,5,1,7,0,1,2],"fiveT":[5,10,2,4,3,2,5]},{"name":"SKYHY","cost":1400,"late":true,"cuisines":["North Indian","Chinese","Continental"],"collections":["Live Sports Screenings","Gigs and Events"],"c9":[21,0,4,0,22,0,23,0,30],"pics":14,"lowN":25,"fiveN":30,"lowT":[13,3,6,5,1,5,0],"fiveT":[18,4,2,1,0,15,0]},{"name":"Tiki Shack","cost":1000,"late":false,"cuisines":["Continental"],"collections":[],"c9":[18,0,6,0,14,0,34,0,28],"pics":18,"lowN":24,"fiveN":28,"lowT":[20,3,1,10,1,7,1],"fiveT":[14,7,2,0,0,18,2]},{"name":"Mustang Terrace Lounge","cost":1300,"late":true,"cuisines":["Mexican","Italian","North Indian","Chinese","Salad"],"collections":["Rooftops","Live Sports Screenings","Best Bars & Pubs"],"c9":[27,0,1,0,14,0,30,0,28],"pics":18,"lowN":28,"fiveN":28,"lowT":[20,2,3,8,2,8,0],"fiveT":[19,4,6,1,1,19,0]},{"name":"3B's - Buddies, Bar & Barbecue","cost":1100,"late":false,"cuisines":["North Indian","Mediterranean","European"],"collections":["Barbecue & Grill","Live Sports Screenings"],"c9":[2,0,4,0,1,0,2,0,91],"pics":7,"lowN":6,"fiveN":91,"lowT":[4,3,2,3,0,1,0],"fiveT":[64,22,11,2,1,14,0]},{"name":"Behrouz Biryani","cost":600,"late":true,"cuisines":["Mughlai","Biryani"],"collections":[],"c9":[38,0,9,1,9,0,18,0,25],"pics":23,"lowN":47,"fiveN":25,"lowT":[6,14,6,6,1,4,8],"fiveT":[4,15,2,1,2,2,2]},{"name":"Hunger Maggi Point","cost":200,"late":true,"cuisines":["Fast Food"],"collections":[],"c9":[26,0,11,0,17,0,17,0,29],"pics":21,"lowN":37,"fiveN":29,"lowT":[0,9,1,2,5,1,2],"fiveT":[1,5,3,3,0,1,1]},{"name":"Pot Pourri","cost":900,"late":null,"cuisines":["Andhra","South Indian","North Indian"],"collections":[],"c9":[17,0,9,0,20,0,33,0,21],"pics":17,"lowN":26,"fiveN":21,"lowT":[15,10,8,10,2,7,0],"fiveT":[14,9,5,3,2,13,4]},{"name":"Pista House","cost":1000,"late":true,"cuisines":["Bakery","North Indian","Mughlai","Juices","Chinese"],"collections":["Haleem"],"c9":[23,0,6,0,16,0,35,0,20],"pics":36,"lowN":29,"fiveN":20,"lowT":[17,10,9,10,6,3,3],"fiveT":[8,13,4,2,1,0,6]},{"name":"Marsala Food Company","cost":700,"late":true,"cuisines":["Arabian","North Indian","Chinese"],"collections":["Mandi","Great Buffets","The \u2018Must Visit\u2019 Eateries"],"c9":[22,0,5,0,12,0,27,0,34],"pics":37,"lowN":27,"fiveN":34,"lowT":[10,12,7,6,6,13,2],"fiveT":[19,26,8,9,10,21,5]},{"name":"Club Rogue","cost":900,"late":true,"cuisines":["North Indian","Fast Food"],"collections":[],"c9":[32,0,9,0,15,0,27,0,17],"pics":6,"lowN":41,"fiveN":17,"lowT":[28,1,5,12,1,18,0],"fiveT":[5,0,5,0,0,14,0]},{"name":"Mazzo - Marriott Executive Apartments","cost":1700,"late":true,"cuisines":["Italian","North Indian","South Indian","Asian"],"collections":["Top-Rated","Gold Curated","Fancy and Fun"],"c9":[6,0,3,0,14,0,20,0,57],"pics":35,"lowN":9,"fiveN":57,"lowT":[5,1,2,2,2,6,0],"fiveT":[29,22,13,8,3,42,1]},{"name":"Green Bawarchi Restaurant","cost":700,"late":false,"cuisines":["North Indian","Chinese","Biryani"],"collections":[],"c9":[25,0,3,0,15,0,12,0,45],"pics":4,"lowN":28,"fiveN":45,"lowT":[3,8,0,2,8,1,2],"fiveT":[1,4,2,1,0,0,0]},{"name":"Banana Leaf Multicuisine Restaurant","cost":700,"late":false,"cuisines":["Biryani","South Indian","North Indian","Chinese","Andhra"],"collections":["Great Buffets"],"c9":[10,0,8,0,14,0,39,0,29],"pics":12,"lowN":18,"fiveN":29,"lowT":[5,4,2,2,0,4,3],"fiveT":[6,10,10,0,2,4,1]},{"name":"Kritunga Restaurant","cost":500,"late":false,"cuisines":["Andhra","Biryani","Hyderabadi","North Indian"],"collections":[],"c9":[24,0,8,0,8,0,17,0,43],"pics":4,"lowN":32,"fiveN":43,"lowT":[6,11,1,4,4,3,1],"fiveT":[3,2,2,0,1,2,0]},{"name":"The Glass Onion","cost":1200,"late":true,"cuisines":["North Indian","Continental","Italian","Asian"],"collections":["Fancy and Fun"],"c9":[11,0,8,0,8,0,33,0,40],"pics":35,"lowN":19,"fiveN":40,"lowT":[17,5,4,7,2,7,2],"fiveT":[24,10,11,6,1,37,1]},{"name":"Deli 9 Bistro","cost":700,"late":false,"cuisines":["Cafe","Continental","Desserts"],"collections":[],"c9":[6,0,9,0,13,0,41,0,31],"pics":32,"lowN":15,"fiveN":31,"lowT":[7,7,2,0,0,3,3],"fiveT":[14,12,6,3,2,16,5]},{"name":"Frio Bistro","cost":1200,"late":false,"cuisines":["European","Italian","Continental","Spanish"],"collections":[],"c9":[7,0,11,0,22,0,34,0,26],"pics":31,"lowN":18,"fiveN":26,"lowT":[10,9,5,4,2,5,1],"fiveT":[16,13,3,2,0,9,2]},{"name":"Karachi Bakery","cost":500,"late":false,"cuisines":["Bakery","Fast Food","Desserts"],"collections":[],"c9":[17,0,3,0,9,0,25,0,46],"pics":19,"lowN":20,"fiveN":46,"lowT":[0,3,1,1,4,0,0],"fiveT":[6,6,5,8,0,1,1]},{"name":"Karachi Cafe","cost":600,"late":false,"cuisines":["Cafe","Desserts","Fast Food"],"collections":[],"c9":[8,0,10,0,11,0,44,1,26],"pics":44,"lowN":18,"fiveN":26,"lowT":[5,7,2,4,2,6,1],"fiveT":[10,5,5,4,2,16,3]},{"name":"The Foodie Monster Kitchen","cost":500,"late":true,"cuisines":["American","Wraps","Desserts"],"collections":["Great Breakfasts","Late Night Restaurants","Best shawarmas"],"c9":[14,0,7,0,19,0,27,0,33],"pics":16,"lowN":21,"fiveN":33,"lowT":[1,4,2,4,2,1,2],"fiveT":[2,6,2,2,0,2,0]},{"name":"La La Land - Bar & Kitchen","cost":1000,"late":false,"cuisines":["Finger Food","North Indian","Kebab","Chinese"],"collections":["Great Buffets","Trending This Week"],"c9":[22,0,8,0,19,0,31,0,20],"pics":22,"lowN":30,"fiveN":20,"lowT":[18,7,2,8,3,8,1],"fiveT":[10,5,4,2,0,12,0]},{"name":"Owm Nom Nom","cost":900,"late":false,"cuisines":["Chinese","Biryani","Andhra","North Indian"],"collections":[],"c9":[28,0,4,0,20,0,7,0,41],"pics":5,"lowN":32,"fiveN":41,"lowT":[12,7,3,7,8,0,2],"fiveT":[3,5,3,0,1,0,1]},{"name":"Ulavacharu","cost":1400,"late":false,"cuisines":["Andhra","North Indian","Chinese"],"collections":["Function Venues","Regional Favorites"],"c9":[22,0,10,0,17,0,25,1,25],"pics":20,"lowN":32,"fiveN":25,"lowT":[15,16,7,7,1,6,4],"fiveT":[14,12,4,6,3,10,1]},{"name":"Shanghai Chef 2","cost":800,"late":false,"cuisines":["Chinese","Thai","Indonesian","Asian"],"collections":["Pan-Asian Delicacies"],"c9":[28,0,8,0,16,0,26,0,22],"pics":34,"lowN":36,"fiveN":22,"lowT":[12,11,4,9,12,6,3],"fiveT":[9,11,6,1,4,11,3]},{"name":"Udipi's Upahar","cost":500,"late":false,"cuisines":["South Indian","North Indian","Chinese"],"collections":[],"c9":[10,0,4,0,10,0,25,0,51],"pics":6,"lowN":14,"fiveN":51,"lowT":[2,3,1,0,2,1,0],"fiveT":[3,5,2,2,0,0,0]},{"name":"Mathura Vilas","cost":500,"late":false,"cuisines":["South Indian","North Indian","Chinese"],"collections":["Veggie Friendly","Terrific Thalis"],"c9":[34,0,9,0,16,0,23,0,18],"pics":16,"lowN":43,"fiveN":18,"lowT":[24,9,9,20,7,8,4],"fiveT":[12,6,4,1,2,4,1]},{"name":"Gal Punjab Di","cost":800,"late":false,"cuisines":["North Indian","Continental"],"collections":[],"c9":[10,0,7,0,19,0,40,0,24],"pics":26,"lowN":17,"fiveN":24,"lowT":[4,5,3,1,1,7,2],"fiveT":[8,8,4,2,0,10,0]},{"name":"Hitech Bawarchi Food Zone","cost":500,"late":false,"cuisines":["Biryani","North Indian","Chinese"],"collections":[],"c9":[34,0,10,0,12,0,5,0,39],"pics":1,"lowN":44,"fiveN":39,"lowT":[2,9,1,0,1,2,7],"fiveT":[4,0,0,0,0,0,2]},{"name":"Biryanis And More","cost":500,"late":false,"cuisines":["North Indian","Biryani","Chinese"],"collections":[],"c9":[11,0,10,0,10,0,32,0,37],"pics":12,"lowN":21,"fiveN":37,"lowT":[5,5,3,3,2,2,1],"fiveT":[10,11,3,2,0,4,3]},{"name":"Diners Pavilion","cost":1200,"late":true,"cuisines":["Chinese","Continental","Italian"],"collections":["Great Buffets","Live Sports Screenings"],"c9":[20,0,8,0,20,0,24,0,28],"pics":23,"lowN":28,"fiveN":28,"lowT":[19,10,0,8,4,8,1],"fiveT":[17,14,6,5,1,11,3]},{"name":"Asian Meal Box","cost":200,"late":true,"cuisines":["Asian"],"collections":[],"c9":[40,0,12,0,15,0,16,0,17],"pics":12,"lowN":52,"fiveN":17,"lowT":[3,22,2,3,2,0,9],"fiveT":[0,6,1,0,0,1,3]},{"name":"Cafe Eclat","cost":700,"late":false,"cuisines":["Cafe","Bakery"],"collections":["Sneak Peek Hyderabad"],"c9":[10,1,8,1,16,0,39,0,25],"pics":43,"lowN":19,"fiveN":25,"lowT":[6,7,11,5,4,2,3],"fiveT":[8,6,5,3,3,10,0]},{"name":"Feast - Sheraton Hyderabad Hotel","cost":2500,"late":false,"cuisines":["Modern Indian","Asian","Continental","Italian"],"collections":["Sunday Brunches","Great Breakfasts","Function Venues","Ramzan Mubarak"],"c9":[8,0,4,0,6,0,22,0,60],"pics":25,"lowN":12,"fiveN":60,"lowT":[7,7,7,1,4,4,0],"fiveT":[42,16,7,4,1,14,0]},{"name":"Being Hungry","cost":450,"late":false,"cuisines":["North Indian","Chinese"],"collections":[],"c9":[19,0,9,0,7,0,17,0,48],"pics":3,"lowN":28,"fiveN":47,"lowT":[1,8,1,1,0,0,3],"fiveT":[4,3,5,0,0,1,3]},{"name":"Tempteys","cost":350,"late":true,"cuisines":["Desserts","Beverages"],"collections":["Best Milkshakes"],"c9":[14,0,6,0,8,0,25,0,47],"pics":26,"lowN":20,"fiveN":47,"lowT":[0,5,1,0,0,1,0],"fiveT":[9,8,2,2,2,3,0]},{"name":"KS Bakers","cost":200,"late":false,"cuisines":["Bakery","Desserts","Fast Food"],"collections":[],"c9":[6,2,5,0,12,8,16,11,40],"pics":27,"lowN":13,"fiveN":40,"lowT":[2,7,0,2,4,2,1],"fiveT":[3,32,16,9,1,3,4]},{"name":"PourHouse7","cost":1200,"late":true,"cuisines":["North Indian","Continental","Chinese","Italian"],"collections":["Happy Hours","Top Drinking Destinations","Corporate Favorites"],"c9":[10,0,8,0,14,0,22,0,46],"pics":34,"lowN":18,"fiveN":46,"lowT":[15,3,3,6,2,6,1],"fiveT":[30,17,5,4,3,30,3]},{"name":"Prism Club & Kitchen","cost":1200,"late":true,"cuisines":["Kebab","Continental","Italian","North Indian"],"collections":["Sneak Peek Hyderabad","Best Bars & Pubs","Gigs and Events"],"c9":[10,0,2,0,7,0,18,1,62],"pics":13,"lowN":12,"fiveN":62,"lowT":[10,2,3,3,1,4,0],"fiveT":[26,6,11,5,1,40,0]},{"name":"Shree Santosh Dhaba Family Restaurant","cost":500,"late":false,"cuisines":["North Indian","Chinese","Fast Food"],"collections":[],"c9":[35,0,12,0,15,0,11,0,27],"pics":2,"lowN":47,"fiveN":27,"lowT":[2,8,1,3,2,0,2],"fiveT":[1,2,0,0,0,0,1]},{"name":"Dine O China","cost":850,"late":false,"cuisines":["Chinese","Asian","Momos"],"collections":[],"c9":[19,0,15,0,10,0,22,0,34],"pics":20,"lowN":34,"fiveN":34,"lowT":[4,10,3,5,1,1,3],"fiveT":[14,15,7,3,2,11,5]},{"name":"Hyderabad Chefs","cost":600,"late":false,"cuisines":["North Indian","Chinese"],"collections":[],"c9":[15,0,9,0,8,0,16,0,52],"pics":1,"lowN":24,"fiveN":50,"lowT":[2,4,0,3,4,3,3],"fiveT":[4,6,0,0,0,0,1]},{"name":"Komatose - Holiday Inn Express & Suites","cost":1500,"late":false,"cuisines":["North Indian","Chinese","Japanese","Sushi"],"collections":["Happy Hours","Top-Rated","Gold Curated"],"c9":[12,0,9,2,11,1,27,1,37],"pics":27,"lowN":21,"fiveN":37,"lowT":[12,3,2,6,1,5,1],"fiveT":[20,5,4,3,2,26,2]},{"name":"Aromas@11SIX","cost":750,"late":true,"cuisines":["North Indian","Chinese","Mughlai","Biryani"],"collections":[],"c9":[19,0,9,0,17,0,17,0,38],"pics":3,"lowN":28,"fiveN":38,"lowT":[10,9,7,1,3,6,0],"fiveT":[10,10,5,3,1,5,2]},{"name":"Yum Yum Tree - The Arabian Food Court","cost":1200,"late":true,"cuisines":["North Indian","Hyderabadi"],"collections":["Food Hygiene Rated Restaurants in Hyderabad"],"c9":[12,0,14,0,16,0,22,0,36],"pics":36,"lowN":26,"fiveN":36,"lowT":[3,8,3,1,1,2,1],"fiveT":[12,16,6,5,4,8,2]},{"name":"The Tilt Bar Republic","cost":1500,"late":true,"cuisines":["North Indian","Continental","Italian"],"collections":["Gigs and Events","Corporate Favorites"],"c9":[9,0,3,0,18,0,34,1,35],"pics":30,"lowN":12,"fiveN":35,"lowT":[7,1,2,4,1,2,0],"fiveT":[18,17,3,3,3,19,1]},{"name":"The Indi Grill","cost":1500,"late":false,"cuisines":["BBQ","Asian","Modern Indian"],"collections":["Food Hygiene Rated Restaurants in Hyderabad","Great Buffets","Hyderabad's Hottest"],"c9":[0,0,3,0,5,0,21,0,71],"pics":13,"lowN":3,"fiveN":71,"lowT":[1,1,1,1,0,1,0],"fiveT":[58,19,9,1,6,28,0]},{"name":"Urban Asia - Kitchen & Bar","cost":1100,"late":false,"cuisines":["Asian","Thai","Chinese","Sushi","Momos"],"collections":[],"c9":[12,0,7,0,16,0,34,0,31],"pics":34,"lowN":19,"fiveN":31,"lowT":[11,5,6,4,3,8,1],"fiveT":[19,14,4,6,3,13,1]},{"name":"Eat India Company","cost":1300,"late":false,"cuisines":["North Indian","Mughlai","Beverages"],"collections":[],"c9":[22,0,11,0,18,0,17,0,32],"pics":21,"lowN":33,"fiveN":32,"lowT":[21,10,7,17,7,8,2],"fiveT":[23,11,4,1,2,12,1]},{"name":"Labonel","cost":1000,"late":false,"cuisines":["Bakery","Desserts"],"collections":["Best Bakeries"],"c9":[11,1,4,2,1,8,19,22,32],"pics":23,"lowN":16,"fiveN":32,"lowT":[9,3,6,4,2,5,0],"fiveT":[2,13,14,14,1,2,0]},{"name":"Driven Cafe","cost":600,"late":true,"cuisines":["Cafe","Fast Food","Beverages"],"collections":[],"c9":[7,0,3,0,20,0,48,1,21],"pics":60,"lowN":10,"fiveN":21,"lowT":[2,3,2,1,0,4,0],"fiveT":[6,4,2,2,0,12,0]},{"name":"Faasos","cost":600,"late":true,"cuisines":["Fast Food","Biryani","Desserts"],"collections":[],"c9":[30,0,8,0,14,0,25,0,23],"pics":22,"lowN":38,"fiveN":23,"lowT":[4,7,4,6,1,1,5],"fiveT":[2,6,5,1,0,2,2]},{"name":"Royal Spicy Restaurant","cost":700,"late":false,"cuisines":["North Indian","South Indian"],"collections":[],"c9":[23,0,4,0,6,0,10,0,57],"pics":2,"lowN":27,"fiveN":57,"lowT":[1,6,0,1,1,0,2],"fiveT":[5,13,5,0,0,3,2]},{"name":"The Old Madras Baking Company","cost":350,"late":false,"cuisines":["Bakery"],"collections":[],"c9":[10,0,6,0,18,0,43,0,22],"pics":43,"lowN":16,"fiveN":22,"lowT":[4,2,0,3,4,0,0],"fiveT":[5,9,5,6,2,4,2]},{"name":"Squeeze @ The Lime","cost":650,"late":false,"cuisines":["Italian","North Indian","Chinese","Salad"],"collections":["Veggie Friendly"],"c9":[13,0,7,0,8,0,29,1,42],"pics":7,"lowN":20,"fiveN":42,"lowT":[3,6,1,4,0,1,0],"fiveT":[23,16,7,6,2,7,2]},{"name":"Khaan Saab","cost":1100,"late":false,"cuisines":["North Indian","Mughlai"],"collections":["New on Gold"],"c9":[16,0,6,0,6,0,26,0,46],"pics":24,"lowN":22,"fiveN":46,"lowT":[13,6,7,4,5,10,1],"fiveT":[32,12,6,4,1,25,1]},{"name":"Olive Garden","cost":700,"late":false,"cuisines":["North Indian","Chinese","Continental","Biryani"],"collections":[],"c9":[11,0,3,0,19,0,33,0,34],"pics":9,"lowN":14,"fiveN":34,"lowT":[3,5,4,1,2,3,0],"fiveT":[11,9,12,2,0,8,3]},{"name":"Tandoori Food Works","cost":500,"late":true,"cuisines":["North Indian","Burger","Kebab"],"collections":["Brilliant Biryanis"],"c9":[24,0,10,0,10,0,27,0,29],"pics":13,"lowN":34,"fiveN":29,"lowT":[2,9,2,2,5,1,5],"fiveT":[2,7,2,0,1,0,1]},{"name":"Delhi-39","cost":600,"late":false,"cuisines":["North Indian","Chinese"],"collections":[],"c9":[30,0,13,0,12,1,18,0,26],"pics":1,"lowN":43,"fiveN":26,"lowT":[5,9,3,4,1,2,3],"fiveT":[0,3,2,0,0,0,1]},{"name":"Al Saba Restaurant","cost":750,"late":false,"cuisines":["North Indian","Chinese","Seafood","Biryani","Hyderabadi"],"collections":[],"c9":[24,0,5,4,20,4,17,1,25],"pics":9,"lowN":29,"fiveN":24,"lowT":[7,9,3,6,7,4,2],"fiveT":[4,4,0,1,1,1,0]},{"name":"GD's","cost":500,"late":true,"cuisines":["Burger","American"],"collections":[],"c9":[10,0,8,0,9,0,22,0,51],"pics":19,"lowN":18,"fiveN":51,"lowT":[0,5,1,1,1,0,0],"fiveT":[3,13,8,7,1,0,2]},{"name":"T Grill","cost":700,"late":false,"cuisines":["North Indian","Andhra","Biryani","Chinese"],"collections":[],"c9":[21,0,10,3,15,3,24,6,18],"pics":18,"lowN":31,"fiveN":18,"lowT":[12,13,5,7,7,9,3],"fiveT":[5,7,2,2,1,6,1]},{"name":"Momos Delight","cost":200,"late":true,"cuisines":["Momos"],"collections":[],"c9":[16,0,9,0,7,0,22,1,45],"pics":17,"lowN":25,"fiveN":45,"lowT":[3,8,1,1,4,0,2],"fiveT":[4,11,4,2,1,0,0]},{"name":"The Chocolate Room","cost":600,"late":true,"cuisines":["Cafe","Desserts"],"collections":[],"c9":[26,0,19,0,20,0,16,0,19],"pics":28,"lowN":45,"fiveN":19,"lowT":[6,16,6,15,1,2,0],"fiveT":[8,3,5,8,0,9,1]},{"name":"American Wild Wings","cost":600,"late":true,"cuisines":["American","Fast Food","Salad","Burger"],"collections":["Food Hygiene Rated Restaurants in Hyderabad"],"c9":[10,0,4,0,6,0,15,0,42],"pics":28,"lowN":14,"fiveN":42,"lowT":[2,6,0,1,4,2,1],"fiveT":[8,28,10,3,2,18,5]},{"name":"Domino's Pizza","cost":400,"late":false,"cuisines":["Fast Food","Pizza"],"collections":[],"c9":[39,0,6,0,5,0,7,0,43],"pics":3,"lowN":45,"fiveN":42,"lowT":[3,4,2,13,1,2,1],"fiveT":[3,4,1,1,0,0,0]},{"name":"Mohammedia Shawarma","cost":150,"late":true,"cuisines":["Street Food","Arabian"],"collections":[],"c9":[36,0,12,0,7,0,7,0,38],"pics":2,"lowN":48,"fiveN":38,"lowT":[1,11,3,1,9,0,3],"fiveT":[4,4,0,1,0,0,0]},{"name":"Arena Eleven","cost":1600,"late":true,"cuisines":["Continental"],"collections":["New on Gold"],"c9":[5,0,4,0,10,0,23,0,43],"pics":31,"lowN":9,"fiveN":43,"lowT":[8,2,1,8,1,1,0],"fiveT":[27,8,4,1,3,25,0]},{"name":"Cascade - Radisson Hyderabad Hitec City","cost":1800,"late":true,"cuisines":["North Indian","Italian","Continental","Asian"],"collections":[],"c9":[4,0,1,2,12,5,17,3,56],"pics":27,"lowN":5,"fiveN":56,"lowT":[2,1,2,1,1,1,0],"fiveT":[42,22,2,0,2,18,2]},{"name":"Collage - Hyatt Hyderabad Gachibowli","cost":2800,"late":true,"cuisines":["Continental","Italian","North Indian","Chinese","Asian"],"collections":["Sunday Brunches"],"c9":[16,1,11,2,13,1,25,2,29],"pics":29,"lowN":28,"fiveN":29,"lowT":[19,7,8,11,5,9,1],"fiveT":[21,9,6,5,2,12,0]},{"name":"Zing's Northeast Kitchen","cost":550,"late":false,"cuisines":["North Eastern","Momos"],"collections":[],"c9":[13,0,10,0,13,0,27,0,37],"pics":35,"lowN":23,"fiveN":37,"lowT":[15,8,6,11,9,8,7],"fiveT":[16,15,15,7,3,6,5]},{"name":"Dunkin' Donuts","cost":550,"late":false,"cuisines":["Desserts","Cafe","Beverages","Burger","Fast Food"],"collections":[],"c9":[22,2,9,0,14,7,28,4,14],"pics":43,"lowN":33,"fiveN":14,"lowT":[10,10,1,3,10,1,0],"fiveT":[6,7,3,5,1,6,0]},{"name":"Desi Bytes","cost":400,"late":true,"cuisines":["North Indian","Chinese"],"collections":[],"c9":[34,0,9,0,15,0,17,0,25],"pics":7,"lowN":43,"fiveN":25,"lowT":[4,6,0,4,4,1,5],"fiveT":[2,4,2,3,0,0,1]},{"name":"Hyderabadi Daawat","cost":600,"late":false,"cuisines":["Hyderabadi","Chinese","Mughlai"],"collections":["Food Hygiene Rated Restaurants in Hyderabad"],"c9":[14,0,5,0,7,0,32,0,42],"pics":37,"lowN":19,"fiveN":42,"lowT":[4,7,5,1,3,2,1],"fiveT":[16,27,4,9,4,15,3]},{"name":"Zega - Sheraton Hyderabad Hotel","cost":1750,"late":true,"cuisines":["Asian","Sushi"],"collections":[],"c9":[1,0,2,0,8,0,29,0,60],"pics":23,"lowN":3,"fiveN":60,"lowT":[3,1,0,1,1,1,0],"fiveT":[46,16,12,10,1,34,1]},{"name":"Triptify","cost":400,"late":false,"cuisines":["North Indian"],"collections":[],"c9":[22,0,6,0,9,0,21,0,42],"pics":10,"lowN":28,"fiveN":42,"lowT":[2,3,1,1,9,0,3],"fiveT":[2,14,3,1,0,1,3]},{"name":"Chinese Pavilion","cost":1000,"late":false,"cuisines":["Chinese","Seafood"],"collections":[],"c9":[7,2,3,1,15,8,32,10,22],"pics":37,"lowN":12,"fiveN":22,"lowT":[3,8,4,0,3,4,1],"fiveT":[15,12,0,7,2,7,3]}],"themes":["Service / staff","Food taste","Price / value","Waiting / slow","Hygiene / stale","Ambience","Quantity"],"range":["2016-05-31","2019-05-25"]};
+const R = D.restaurants;
+const BANDS = [["Up to 400",0,400],["401 to 700",401,700],["701 to 1000",701,1000],["1001 to 1500",1001,1500],["Over 1500",1501,1e9]];
+const bandOf = c => BANDS.findIndex(b => c >= b[1] && c <= b[2]);
+const st = {band:"all", cuisine:"all", tag:"all", sortKey:"avg", sortDir:-1};
+const $ = id => document.getElementById(id);
+const fmt = n => n.toLocaleString("en-IN");
+const pct = x => (x*100).toFixed(1)+"%";
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function stats(r){ // per-restaurant numbers
+  const n = r.c9.reduce((a,b)=>a+b,0);
+  const sum = r.c9.reduce((a,c,i)=>a+c*(1+0.5*i),0);
+  const low = r.c9[0]+r.c9[1]+r.c9[2];
+  return {n, avg:sum/n, low:low/n, five:r.c9[8]/n, sum, lowN_:low, fiveN_:r.c9[8]};
+}
+R.forEach(r => Object.assign(r, stats(r), {band:bandOf(r.cost), tagged:r.collections.length>0}));
+
+const ok = (r, ignoreBand) =>
+  (ignoreBand || st.band==="all" || r.band===+st.band) &&
+  (st.cuisine==="all" || r.cuisines.includes(st.cuisine)) &&
+  (st.tag==="all" || (st.tag==="yes") === r.tagged);
+
+function agg(list){
+  const n = list.reduce((a,r)=>a+r.n,0);
+  const sum = list.reduce((a,r)=>a+r.sum,0);
+  const low = list.reduce((a,r)=>a+r.lowN_,0), five = list.reduce((a,r)=>a+r.fiveN_,0);
+  const c9 = Array(9).fill(0); list.forEach(r=>r.c9.forEach((c,i)=>c9[i]+=c));
+  return {n, avg:n?sum/n:0, low:n?low/n:0, five:n?five/n:0, c9, count:list.length};
+}
+
+/* tooltip */
+const tip = $("tip");
+function showTip(e){
+  const t = e.target.closest("[data-tip]"); if(!t){ tip.style.display="none"; return; }
+  tip.textContent = t.dataset.tip; tip.style.display="block";
+  const x = e.clientX ?? (t.getBoundingClientRect().left+10), y = e.clientY ?? (t.getBoundingClientRect().top);
+  tip.style.left = Math.min(x+12, innerWidth-tip.offsetWidth-8)+"px";
+  tip.style.top = Math.max(y-tip.offsetHeight-10, 6)+"px";
+}
+document.addEventListener("mousemove", showTip);
+document.addEventListener("focusin", showTip);
+document.addEventListener("focusout", ()=>tip.style.display="none");
+document.addEventListener("mouseleave", ()=>tip.style.display="none");
+
+function rowHTML(name, widthPct, val, cls, tipText, sel){
+  return `<div class="row" tabindex="0" data-tip="${esc(tipText)}"><div class="name" title="${esc(name)}">${esc(name)}</div>`+
+    `<div class="track"><div class="bar ${cls||""} ${sel?"sel":""}" style="width:${widthPct}%"></div></div><div class="val">${val}</div></div>`;
+}
+
+function render(){
+  const list = R.filter(r=>ok(r,false)), A = agg(list);
+  $("scope").textContent = `${A.count} restaurants and ${fmt(A.n)} reviews match your filters (${D.range[0].slice(0,4)} to ${D.range[1].slice(0,4)}).`;
+
+  $("tiles").innerHTML = [
+    ["Reviews", fmt(A.n), ""], ["Restaurants", A.count, ""],
+    ["Average rating", A.n?A.avg.toFixed(2):"-", "out of 5"],
+    ["Five-star share", A.n?pct(A.five):"-", "of reviews"],
+    ["1-2 star share", A.n?pct(A.low):"-", "of reviews"]
+  ].map(t=>`<div class="tile"><div class="l">${t[0]}</div><div class="v">${t[1]}</div><div class="d">${t[2]}&nbsp;</div></div>`).join("");
+
+  // 1. rating by cost band (ignores band filter, respects the others)
+  const rows = BANDS.map((b,i)=>{ const g = agg(R.filter(r=>ok(r,true)&&r.band===i)); return {b:b[0], g, i}; });
+  $("cBands").innerHTML = rows.map(x => x.g.count
+    ? rowHTML(x.b, x.g.avg/5*100, x.g.avg.toFixed(2), "", `${x.b} Rs: ${x.g.count} restaurants, ${fmt(x.g.n)} reviews, average ${x.g.avg.toFixed(2)}`, st.band!=="all" && +st.band===x.i)
+    : rowHTML(x.b, 0, "-", "", `${x.b} Rs: no restaurants match`, false)).join("");
+
+  // 2. distribution
+  const whole = [0,2,4,6,8].map(i=>A.c9[i]); const half = A.c9[1]+A.c9[3]+A.c9[5]+A.c9[7];
+  const mx = Math.max(1,...whole);
+  $("cDist").innerHTML = A.n ? [5,4,3,2,1].map(s => {
+    const c = whole[s-1];
+    return rowHTML(s+" star", c/mx*100, pct(c/A.n), s>=4?"":(s<=2?"o":"n"), `${s} star: ${fmt(c)} reviews (${pct(c/A.n)})`);
+  }).join("") : '<div class="empty">No reviews match these filters.</div>';
+  $("distNote").textContent = A.n ? `Half-star ratings (${fmt(half)} reviews, ${pct(half/A.n)}) count in averages but are not shown as bars.` : "";
+
+  // 3. themes
+  const lowN = list.reduce((a,r)=>a+r.lowN,0), fiveN = list.reduce((a,r)=>a+r.fiveN,0);
+  $("cThemes").innerHTML = (lowN>=20 && fiveN>=20) ? D.themes.map((t,i)=>{
+    const l = list.reduce((a,r)=>a+r.lowT[i],0)/lowN, f = list.reduce((a,r)=>a+r.fiveT[i],0)/fiveN;
+    return `<div class="row" tabindex="0" data-tip="${esc(t)}: ${pct(l)} of 1-2 star reviews, ${pct(f)} of 5 star reviews"><div class="name">${esc(t)}</div>`+
+      `<div class="pair"><div class="track" style="height:10px"><div class="bar o" style="width:${l*100/0.5}%;height:10px"></div></div><div class="track" style="height:10px"><div class="bar" style="width:${f*100/0.5}%;height:10px"></div></div></div>`+
+      `<div class="val" style="min-width:6.4em;font-size:.76rem">${(l*100).toFixed(0)}% / ${(f*100).toFixed(0)}%</div></div>`;
+  }).join("") : '<div class="empty">Too few written reviews for these filters (needs 20 low-rated and 20 five-star).</div>';
+
+  // 4. top 10
+  const top = list.filter(r=>r.n>=50).sort((a,b)=>b.avg-a.avg).slice(0,10);
+  $("cTop").innerHTML = top.length ? top.map(r=>rowHTML(r.name, r.avg/5*100, r.avg.toFixed(2), "", `${r.name}: ${r.avg.toFixed(2)} average, ${r.n} reviews, Rs ${fmt(r.cost)} for two`)).join("") : '<div class="empty">No restaurants match these filters.</div>';
+
+  // 5. scatter: x = % five star, y = % 1-2 star
+  const W=760,H=340,m={l:46,r:16,t:12,b:40}, iw=W-m.l-m.r, ih=H-m.t-m.b;
+  const X = v=>m.l+v*iw, Y = v=>m.t+(1-v)*ih;
+  let s = `<svg viewBox="0 0 ${W} ${H}" width="100%" style="max-width:860px;display:block" role="img" aria-label="Scatter plot of five-star share against low-rating share for each restaurant. The table view lists the same numbers.">`;
+  [0,.25,.5,.75,1].forEach(t=>{
+    s += `<line x1="${X(0)}" x2="${X(1)}" y1="${Y(t)}" y2="${Y(t)}" stroke="var(--grid)" stroke-width="1"/>`+
+         `<line x1="${X(t)}" x2="${X(t)}" y1="${Y(0)}" y2="${Y(1)}" stroke="var(--grid)" stroke-width="1"/>`+
+         `<text x="${m.l-8}" y="${Y(t)+4}" text-anchor="end" font-size="11">${t*100}%</text>`+
+         `<text x="${X(t)}" y="${H-m.b+16}" text-anchor="middle" font-size="11">${t*100}%</text>`;
+  });
+  s += `<line x1="${X(.25)}" x2="${X(.25)}" y1="${Y(0)}" y2="${Y(1)}" stroke="var(--muted)" stroke-width="1"/><line x1="${X(0)}" x2="${X(1)}" y1="${Y(.25)}" y2="${Y(.25)}" stroke="var(--muted)" stroke-width="1"/>`;
+  s += `<text x="${X(.5)}" y="${H-4}" text-anchor="middle" font-size="12">Share of 5 star reviews</text>`;
+  s += `<text transform="translate(12 ${Y(.5)}) rotate(-90)" text-anchor="middle" font-size="12">Share of 1-2 star reviews</text>`;
+  const pol = r => r.five>=.25 && r.low>=.25;
+  const pts = list.slice().sort((a,b)=>pol(a)-pol(b));
+  pts.forEach(r=>{
+    s += `<circle cx="${X(r.five)}" cy="${Y(r.low)}" r="5" fill="${pol(r)?"var(--s2)":"var(--s1)"}" stroke="var(--surface)" stroke-width="2" tabindex="0" data-tip="${esc(r.name)}: ${pct(r.five)} five-star, ${pct(r.low)} 1-2 star, average ${r.avg.toFixed(2)}"/>`;
+  });
+  list.filter(pol).sort((a,b)=>(b.low+b.five)-(a.low+a.five)).slice(0,3).forEach((r,i)=>{
+    const rx = X(r.five), ry = Y(r.low), left = rx>W*0.7;
+    s += `<text x="${left?rx-9:rx+9}" y="${ry+4+(i===1?10:i===2?-8:0)}" text-anchor="${left?"end":"start"}" font-size="11">${esc(r.name)}</text>`;
+  });
+  s += `</svg>`;
+  $("cScatter").innerHTML = list.length ? s : '<div class="empty">No restaurants match these filters.</div>';
+
+  // table
+  const cols = [["name","Restaurant"],["cost","Cost for two (Rs)"],["n","Reviews"],["avg","Average"],["five","% 5 star"],["low","% 1-2 star"]];
+  $("tbl").tHead.innerHTML = "<tr>"+cols.map(c=>`<th scope="col" aria-sort="${st.sortKey===c[0]?(st.sortDir>0?"ascending":"descending"):"none"}"><button type="button" data-k="${c[0]}">${c[1]}${st.sortKey===c[0]?(st.sortDir>0?" ▲":" ▼"):""}</button></th>`).join("")+"</tr>";
+  const sorted = list.slice().sort((a,b)=> st.sortKey==="name" ? st.sortDir*a.name.localeCompare(b.name) : st.sortDir*(a[st.sortKey]-b[st.sortKey]));
+  $("tbl").tBodies[0].innerHTML = sorted.map(r=>`<tr><td>${esc(r.name)}</td><td>${fmt(r.cost)}</td><td>${r.n}</td><td>${r.avg.toFixed(2)}</td><td>${(r.five*100).toFixed(0)}%</td><td>${(r.low*100).toFixed(0)}%</td></tr>`).join("");
+}
+
+// controls
+$("fBand").innerHTML = '<option value="all">All</option>'+BANDS.map((b,i)=>`<option value="${i}">Rs ${b[0].toLowerCase()}</option>`).join("");
+const cc = {}; R.forEach(r=>r.cuisines.forEach(c=>cc[c]=(cc[c]||0)+1));
+$("fCuisine").innerHTML = '<option value="all">All</option>'+Object.keys(cc).sort((a,b)=>cc[b]-cc[a]||a.localeCompare(b)).map(c=>`<option value="${esc(c)}">${esc(c)} (${cc[c]})</option>`).join("");
+$("fBand").onchange = e=>{st.band=e.target.value;render()};
+$("fCuisine").onchange = e=>{st.cuisine=e.target.value;render()};
+$("fTag").onchange = e=>{st.tag=e.target.value;render()};
+$("reset").onclick = ()=>{st.band=st.cuisine=st.tag="all";$("fBand").value=$("fCuisine").value=$("fTag").value="all";render()};
+$("tbl").tHead.addEventListener("click", e=>{ const b=e.target.closest("button"); if(!b) return;
+  const k=b.dataset.k; if(st.sortKey===k) st.sortDir*=-1; else {st.sortKey=k; st.sortDir = k==="name"?1:-1;} render(); });
+render();
+</script>

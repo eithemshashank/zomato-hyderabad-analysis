@@ -1,6 +1,6 @@
 # Zomato Hyderabad Restaurants: What Drives a Rating?
 
-Analysis of 105 Hyderabad restaurants and 9,961 customer reviews (May 2016 - May 2019) using **Python (Pandas)**, **MySQL** and **Power BI**.
+Analysis of 105 Hyderabad restaurants and 9,961 customer reviews (May 2016 - May 2019) using **Python (Pandas)**, **MySQL** and an interactive **dashboard**.
 The goal: find out what actually separates a highly rated restaurant from a poorly rated one, and where a plain "average rating" misleads.
 
 ## Key findings
@@ -16,6 +16,12 @@ The goal: find out what actually separates a highly rated restaurant from a poor
 
 Smaller observations: reviews with photos are rated higher (3.86 vs 3.54); average rating fell from 3.81 (2017) to 3.52 (2018) and recovered to 3.67 (2019); Asian and Continental restaurants average highest (3.92, 3.82), Fast Food and Biryani lowest (3.33, 3.38).
 
+## Interactive dashboard
+
+![Dashboard](reports/dashboard.png)
+
+[`dashboard/index.html`](dashboard/index.html) is a single-file interactive dashboard (filters for cost, cuisine and collection tag; rating by price, review themes, top restaurants, a polarising-restaurants scatter and a sortable table). Download it and open it in a browser, or turn on GitHub Pages for this repo to host it. All numbers are computed from the cleaned data in `data/processed/`.
+
 ## Charts
 
 | | |
@@ -30,7 +36,7 @@ Full numbers: [`reports/findings.txt`](reports/findings.txt)
 1. **Cleaning** ([`scripts/clean_data.py`](scripts/clean_data.py)): dropped 38 blank rows and 1 row with an invalid rating ("Like"); converted cost strings such as `"1,300"` to integers; parsed reviewer info (`"12 Reviews , 3 Followers"` and the `Posts` variant) with regex; parsed timestamps; split cuisines and collections into separate tables; derived a "closes at midnight or later" flag from free-text timings. Log: [`data/processed/cleaning_log.txt`](data/processed/cleaning_log.txt)
 2. **SQL** ([`sql/schema.sql`](sql/schema.sql), [`sql/queries.sql`](sql/queries.sql)): MySQL 8 queries using joins, CTEs, `RANK`, `ROW_NUMBER`, `LAG`, `CASE` bucketing. [`scripts/verify_sql.py`](scripts/verify_sql.py) runs them against the cleaned CSVs and the results match the Pandas numbers.
 3. **Analysis** ([`scripts/analysis.py`](scripts/analysis.py)): statistics (Spearman, Mann-Whitney) and charts.
-4. **Dashboard**: Power BI build steps and DAX in [`powerbi/`](powerbi/).
+4. **Dashboard**: an interactive HTML dashboard in [`dashboard/`](dashboard/). Power BI build steps and DAX are also in [`powerbi/`](powerbi/) for a Power BI version.
 
 ## Limitations (read before quoting any number)
 
